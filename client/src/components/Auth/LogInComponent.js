@@ -4,10 +4,35 @@ import { Button, Grid, IconButton, Link, TextField } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LogInComponent() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios({
+      method : "post",
+      data : {
+        email : email,
+        password: password
+      },
+
+      url : "http://localhost:3001/mentee/login",
+      withCredentials : true
+    })
+
+    .then(res => {
+      console.log(res);
+    })
+
+    .catch(err => console.log(err));
+  }
+
   return (
     <Box
       justifyContent="center"
@@ -34,7 +59,7 @@ export default function LogInComponent() {
           <Box color="rgba(167,139,250)">Email Adress</Box>
           <TextField
             required
-            // onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email adress"
             fullWidth
             id="fullWidth"
@@ -45,7 +70,7 @@ export default function LogInComponent() {
           <Box color="rgba(167,139,250)">Password</Box>
           <TextField
             required
-            // onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
             fullWidth
             id="fullWidth"
@@ -67,7 +92,7 @@ export default function LogInComponent() {
 
         <Grid item xs={12} md={12}>
           <Box display="flex" justifyContent="center">
-            <Button variant="contained" color="success" fullWidth>
+            <Button onClick={handleSubmit} variant="contained" color="success" fullWidth>
               Sign In
             </Button>
           </Box>
