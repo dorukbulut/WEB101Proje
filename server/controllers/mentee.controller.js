@@ -62,9 +62,9 @@ export const registerMentee = async (req, res) => {
 export const verifyMentee = (req, res, next) => {
     
     const token = req.cookies.jwt;
-    const mentee_id = req.body.user
+    //const mentee_id = req.body.user
     if (token) {
-        const auth = verifyToken(token, mentee_id)
+        const auth = verifyToken(token)
         if(auth) {
             next()
         }
@@ -75,6 +75,10 @@ export const verifyMentee = (req, res, next) => {
         
     }
 
+    else {
+        return res.status(401).json({ message: "Not authorized, token not available" })
+    }
+
 
 }
 
@@ -82,4 +86,10 @@ export const authMentee = (req, res) => {
     res.status(201).json({message: "User successfully verified"})
 }
 
-export default {loginMentee, registerMentee, verifyMentee, authMentee}
+export const logoutMentee = (req, res) => {
+    res.cookie("jwt", "", { maxAge: "1" });
+
+    res.status(201).json({message : "Logout successfuly"});
+}
+
+export default {loginMentee, registerMentee, verifyMentee, authMentee, logoutMentee};

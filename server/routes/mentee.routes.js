@@ -7,6 +7,7 @@ import menteeController from '../controllers/mentee.controller.js'
 router.post("/login", menteeController.loginMentee);
 router.post("/register", menteeController.registerMentee);
 router.post("/verify", menteeController.verifyMentee, menteeController.authMentee);
+router.get("/logout", menteeController.verifyMentee, menteeController.logoutMentee);
 
 
 export default router;

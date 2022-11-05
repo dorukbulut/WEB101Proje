@@ -27,7 +27,11 @@ export default function LogInComponent() {
     })
 
     .then(res => {
-      console.log(res);
+        if(res.status == 201) {
+          const user = res.data.user;
+
+          navigate("/mentee");
+        }
     })
 
     .catch(err => console.log(err));

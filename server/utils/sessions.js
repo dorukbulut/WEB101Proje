@@ -11,20 +11,21 @@ export const generateToken = (mentee_id) => {
     };
 }
 
-export const verifyToken = (token, mentee_id) => {
+export const verifyToken = (token) => {
     return jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
         if(err){
             return false
         }
 
         else {
-            if (mentee_id !== decodedToken.id){
-                return false
-            }
+            // if (mentee_id !== decodedToken.id){
+            //     return false
+            // }
 
-            else {
-                return true
-            }
+            // else {
+            //     return true
+            // }
+            return true
         }
     })
 } 
