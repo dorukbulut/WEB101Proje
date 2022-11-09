@@ -8,7 +8,7 @@ import Footer from "../components/ui/Footer";
 
 const index = () => {
     return(
-        <div className="h-screen w-full bg-cover " >
+        <div className="h-full w-full bg-cover " >
             <Navbar />
             <Homepage />
             <About />
