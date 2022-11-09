@@ -5,6 +5,7 @@ import cors from 'cors'
 import router from "./routes/index.js";
 import db from "./config/database.js";
 import cookieParser from 'cookie-parser';
+import Models from "./models/index.js";
 //dotenv config
 dotenv.config()
 
@@ -25,6 +26,7 @@ app.use(router)
 
 try {
   await db.authenticate();
+  await db.sync({force : true});
   console.log('Connection has been established successfully.');
 }
 

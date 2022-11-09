@@ -45,5 +45,7 @@ const Mentee = db.define(
         tablename : "mentees"
     }
 )
-await Mentee.sync({ alter: true }) 
+
+
+
 export default Mentee;

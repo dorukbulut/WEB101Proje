@@ -68,6 +68,4 @@ const Event = db.define(
 )
 
 
-await Event.sync({alter : true})
-
 export default Event;

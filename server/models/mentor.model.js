@@ -57,6 +57,5 @@ const Mentor = db.define(
     }
 )
 
-await Mentor.sync({alter: true})
 
 export default Mentor;
