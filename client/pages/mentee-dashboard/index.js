@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useRouter} from "next/router";
+import MenteeNavbar from "../../components/ui/MenteeNavbar";
 
 const MenteeDashBoard = (props) => {
     const router = useRouter();
@@ -18,8 +19,7 @@ const MenteeDashBoard = (props) => {
     }
     return (
         <div>
-            <p>This is the mentee page!</p>
-            <button onClick={handleLogOut}>LogOut</button>
+            <MenteeNavbar />
         </div>
     );
 }
