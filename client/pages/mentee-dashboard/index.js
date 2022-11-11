@@ -21,12 +21,12 @@ const MenteeDashBoard = (props) => {
         }
     }
     return (
-        <div className="grid grid-cols-4 gap-4">
-            <div className=" col-span-1">
+        <div className="grid grid-cols-6 gap-4 bg-main-color h-screen">
+            <div className=" col-span-1 ">
                 <MenteeNavbar />
             </div>
             
-            <div className="col-span-3 flex flex-col">
+            <div className="col-span-5 p-10 flex flex-col">
                 <div className="flex">
                     <MentorPreview />
                     <TasksPreview />

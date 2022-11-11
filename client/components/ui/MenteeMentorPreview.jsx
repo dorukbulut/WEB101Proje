@@ -3,7 +3,10 @@ export default function MentorPreview () {
 
     return(
         
-        <div>This is the mentor preview</div>
+        
+
+        <div>This is for profile placeholder</div>
+
 
     );
 }
