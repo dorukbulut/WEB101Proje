@@ -22,7 +22,7 @@ export default function LogInComponent(props) {
                 </div>
                 <div class="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
                     <h2 class="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
-                    xl:text-bold">Log in</h2>
+                    xl:text-bold">Log in as Mentee</h2>
                     <div class="mt-12">
                         <form>
                             <div>

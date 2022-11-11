@@ -10,6 +10,9 @@ module.exports = {
       colors : {
         "main-color" : "#2C3333",
         "secondary-color": "#EAEAEA", 
+      },
+      fontFamily : {
+        "montserrat" : ["Montserrat", "sans-serif"]
       }
     },
   },

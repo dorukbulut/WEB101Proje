@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Montserrat";
+  src: url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');;
+}
+
 html,
 body {
   padding: 0;

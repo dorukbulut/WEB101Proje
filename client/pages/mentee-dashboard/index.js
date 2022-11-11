@@ -1,6 +1,9 @@
 import axios from "axios";
 import {useRouter} from "next/router";
 import MenteeNavbar from "../../components/ui/MenteeNavbar";
+import EventsPreview from "../../components/ui/MenteeEventsPreview";
+import TasksPreview from "../../components/ui/MentorTasksPreview";
+import MentorPreview from "../../components/ui/MenteeMentorPreview";
 
 const MenteeDashBoard = (props) => {
     const router = useRouter();
@@ -18,8 +21,23 @@ const MenteeDashBoard = (props) => {
         }
     }
     return (
-        <div>
-            <MenteeNavbar />
+        <div className="grid grid-cols-4 gap-4">
+            <div className=" col-span-1">
+                <MenteeNavbar />
+            </div>
+            
+            <div className="col-span-3 flex flex-col">
+                <div className="flex">
+                    <MentorPreview />
+                    <TasksPreview />
+                </div>
+            
+                <div>
+                    <EventsPreview />
+                </div>
+               
+                
+            </div>
         </div>
     );
 }
