@@ -4,34 +4,34 @@ import  Sequelize  from "sequelize"
 const Enrollement = db.define(
     "enrollement",
     {
-        enrollement_id : {
+        enrollementId : {
             type : Sequelize.UUID,
             defaultValue : Sequelize.UUIDV4,
             allowNul : false,
             primaryKey : true
         },
 
-        enrollement_startHour : {
+        enrollementStartHour : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        enrollement_startDay : {
+        enrollementStartDay : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        enrollement_startMonth : {
+        enrollementStartMonth : {
             type : Sequelize.INTEGER,
             allowNul :false
         },
         
-        enrollement_startYear : {
+        enrollementStartYear : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        enrollement_timeZone : {
+        enrollementTimeZone : {
             type : Sequelize.STRING,
             allowNul : false
         },

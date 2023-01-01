@@ -111,4 +111,61 @@ export const setMentee = async (req, res) => {
     
 }
 
-export default {loginMentor, registerMentor, verifyMentor, authMentor, logoutMentor, setMentee};
+export const setTask = async (req, res) => {
+    const newTask = {...req.body}
+
+    try {
+        const task = await Models.Task.create({
+            ...newTask
+        });
+
+        res.status(200).json({message : "Task Created successfully !"});
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500)
+    }
+}
+
+export const setStatus = async (req, res) => {
+    const item = {...req.body};
+
+    try {
+        const retval = await Models.Task.update({
+            taskStatus : item.status
+        }, {
+            where : {
+                taskId : item.taskId
+            }
+        })
+
+        
+        res.status(200).json({message : "Update Task Submission Status !"});
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+}
+
+export const setEvent = async (req, res) => {
+    const newEvent = {...req.body}
+
+    try {
+        const task = await Models.Event.create({
+            ...newEvent
+        });
+
+        res.status(200).json({message : "Event Created successfully !"});
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500)
+    }
+}
+
+
+export default {setEvent,setStatus,loginMentor, registerMentor, verifyMentor, authMentor, logoutMentor, setMentee, setTask};

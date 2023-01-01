@@ -60,7 +60,6 @@ export const registerMentee = async (req, res) => {
 
 
 export const verifyMentee = (req, res) => {
-    console.log(req.body);
     const token = req.body.jwt ? req.body.jwt : req.cookies.jwt;
     
     if (token) {
@@ -109,5 +108,80 @@ export const getMentors = async (req, res) => {
         res.status(500).json({message: "An error occured !", error : err});
     }
 }
+export const getTasks = async (req, res) => {
+    const mentee = {...req.body};
 
-export default {loginMentee, registerMentee, verifyMentee, authMentee, logoutMentee, getMentors};
+    try {
+        const tasks = await Models.Task.findAll({
+            where : {
+                MenteeID : mentee.mentee_id
+            },
+            include : [Models.Mentee, Models.Mentor]
+        })
+
+        res.status(200).json(tasks);
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500).json({message : err});
+    }
+}
+
+export const setLink = async (req, res) => {
+    const item = {...req.body};
+
+    try {
+        const retval = await Models.Task.update({
+            taskAnswerLink : item.AnswerLink,
+            taskStatus : 1
+        }, {
+            where : {
+                taskId : item.taskId
+            }
+        })
+
+        
+        res.status(200).json({message : "Update Task Submission !"});
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+}
+
+export const getEvents = async (req, res) => {
+    try {
+        const events = await Models.Event.findAll({
+            include : [Models.Enrollement]
+        })
+
+        res.status(200).json(events);
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500).json({message : err});
+    }
+
+
+}
+
+export const Enroll = async (req, res) => {
+    const item = {...req.body};
+    console.log(item);
+
+    try {
+        const retval = await Models.Enrollement.create({...item})
+
+        res.status(200).json({message : "Enrollement Successfull Submission !"});
+    }
+
+    catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+}
+
+export default {Enroll,getEvents,setLink,loginMentee, registerMentee, verifyMentee, authMentee, logoutMentee, getMentors, getTasks};

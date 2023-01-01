@@ -1,7 +1,26 @@
 import MenteeNavbar from "../../components/ui/MenteeNavbar";
 import eventsCalendar from "../../components/ui/eventsCalendar";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const EventsPage = () => {
+const EventsPage = ({data}) => {
+  const [events, setEvents] = useState([]);
+  
+  useEffect(() => {
+     axios({
+        method : "get",
+        url : "http://localhost:3001/mentee/get-events",
+        withCredentials : true
+
+      })
+    .then(res => {
+      if (res.status === 200) {
+        console.log(res.data[0]);
+        setEvents(res.data);
+      }
+    })
+    .catch(err => console.log(err));
+  }, [data]);
   return (
     <div className="grid grid-cols-5">
       <div className="col-span-1">
@@ -357,45 +376,41 @@ const EventsPage = () => {
           </div>
           <div class="md:py-8 py-5 md:px-16 px-5 dark:bg-gray-700 bg-gray-50 rounded-b">
             <div class="px-4">
-              <div class="border-b pb-4 border-gray-400 border-dashed">
+              {events.map(event => {
+                return <div class="border-b pb-4 border-gray-400 border-dashed">
                 <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">
-                  9:00 AM
+                  {event.eventStartDay + "-" + event.eventStartMonth + "-" + event.eventStartYear}
                 </p>
                 <a
                   tabindex="0"
                   class="focus:outline-none text-lg font-medium leading-5 text-gray-800 dark:text-gray-100 mt-2"
                 >
-                  Zoom call with design team
+                  {event.eventName}
                 </a>
                 <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                  Discussion on UX sprint and Wireframe review
+                  {event.eventAbout}
                 </p>
+                  <button disabled={event.enrollements.find(enroll => enroll.MenteeID === data) === undefined ? false : true} onClick={(e) => {
+                    if(!e.target.disabled){
+                    
+                    axios({
+                      method : "POST",
+                      data : {
+                        MenteeID: data,
+                        EventID : e.target.id
+                      },
+                      url :"http://localhost:3001/mentee/enroll",
+                      withCredentials : true
+                    })
+                    .then(res => console.log)
+                    }
+                  }} id={event.eventId}className={`bg-green-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full`}>
+                        {event.enrollements.find(enroll => enroll.MenteeID === data) === undefined ? "Enroll" : "Enrolled"}
+                      </button>
               </div>
-              <div class="border-b pb-4 border-gray-400 border-dashed pt-5">
-                <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">
-                  10:00 AM
-                </p>
-                <a
-                  tabindex="0"
-                  class="focus:outline-none text-lg font-medium leading-5 text-gray-800 dark:text-gray-100 mt-2"
-                >
-                  Orientation session with new hires
-                </a>
-              </div>
-              <div class="border-b pb-4 border-gray-400 border-dashed pt-5">
-                <p class="text-xs font-light leading-3 text-gray-500 dark:text-gray-300">
-                  9:00 AM
-                </p>
-                <a
-                  tabindex="0"
-                  class="focus:outline-none text-lg font-medium leading-5 text-gray-800 dark:text-gray-100 mt-2"
-                >
-                  Zoom call with design team
-                </a>
-                <p class="text-sm pt-2 leading-4 leading-none text-gray-600 dark:text-gray-300">
-                  Discussion on UX sprint and Wireframe review
-                </p>
-              </div>
+              })}
+              
+              
             </div>
           </div>
         </div>
@@ -403,4 +418,31 @@ const EventsPage = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const cookie = context.req.cookies
+
+  try{
+      const res = await axios.post("http://localhost:3001/mentee/verify",cookie,{withCredentials:true})
+      if (res.status === 201) {
+          
+          return {props : {
+              authToken : cookie,
+              data : res.data
+          }}
+      }
+  }
+  
+
+  catch(err) {
+       console.log(err);
+      return {
+          redirect : {
+              permanent : false,
+              destination :"/signin-mentee"
+          }
+      }
+  }
+
+}
 export default EventsPage;

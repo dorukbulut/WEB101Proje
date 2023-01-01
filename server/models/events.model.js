@@ -4,54 +4,54 @@ import Sequelize, { UUIDV4 }  from "sequelize"
 const Event = db.define(
     "events",
     {
-        event_id : {
+        eventId : {
             type : Sequelize.UUID,
             defaultValue : UUIDV4,
             allowNul : false,
             primaryKey : true
         },
 
-        event_name : {
+        eventName : {
             type : Sequelize.STRING,
             allowNul : false
         },
 
-        event_about : {
+        eventAbout : {
             type : Sequelize.STRING,
             allowNul : false
         },
 
-        event_quota : {
+        eventQuota : {
             type : Sequelize.INTEGER,
             allowNul : true
         },
 
-        event_startHour : {
+        eventStartHour : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        event_startDay : {
+        eventStartDay : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        event_startMonth : {
+        eventStartMonth : {
             type : Sequelize.INTEGER,
             allowNul :false
         },
         
-        event_startYear : {
+        eventStartYear : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        event_timeZone : {
+        eventTimeZone : {
             type : Sequelize.STRING,
             allowNul : false
         },
 
-        event_meetingLink : {
+        eventMeetingLink : {
             type : Sequelize.STRING,
             allowNul : false
         },
@@ -61,7 +61,7 @@ const Event = db.define(
     },
 
     {
-        indexes : [{unique : true, fields :  ["event_meetingLink"]}],
+        indexes : [{unique : true, fields :  ["eventMeetingLink"]}],
         timestamps : false,
         tablename  : "events"  
     }

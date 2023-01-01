@@ -78,7 +78,7 @@ const Dashboard = ({data}) => {
             </div>
             <div className="">
                 <div>
-                    <Table />
+                    <Table data={data} />
                 </div>
             </div>
             
@@ -97,11 +97,20 @@ export async function getServerSideProps(context) {
 
     try{
         const res = await axios.post("http://localhost:3001/mentee/verify",cookie,{withCredentials:true})
-        if (res.status === 201) {
+        const res2 = await axios({
+            method : "POST",
+            url : "http://localhost:3001/mentee/get-tasks",
+            data :{
+              mentee_id : res.data
+            },
+            withCredentials : true
+    
+          })
+        if (res.status === 201 && res2.status === 200) {
             
             return {props : {
                 authToken : cookie,
-                data : res.data
+                data : res2.data
             }}
         }
     }

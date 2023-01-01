@@ -30,6 +30,12 @@ Mentor.hasMany(Event, {
     }
 });
 
+Event.belongsTo(Mentor, {
+    foreignKey : {
+        name : "MentorID"
+    }
+})
+
 
 //Mentor-Task
 Mentor.hasMany(Task, {
@@ -38,27 +44,27 @@ Mentor.hasMany(Task, {
     }
 });
 
+Task.belongsTo(Mentor, {
+    foreignKey : {
+        name : "MentorID"
+    }
+})
+
 //Mentee-Task
 Mentee.hasOne(Task, {
     foreignKey : {
         name : "MenteeID",
     } 
 });
-
+Task.belongsTo(Mentee, {
+    foreignKey : {
+        name : "MenteeID",
+    } 
+})
 //Task-Document
 
-Task.hasMany(Document, {
-    foreignKey : {
-        name : "TaskID",
-    }
-});
 
-//Task-Category
-Category.hasMany(Task, {
-    foreignKey : {
-        name : "CategoryID"
-    }
-});
+
 
 //Enrollement-Mentee
 
@@ -67,6 +73,7 @@ Mentee.hasMany(Enrollement, {
         name : "MenteeID"
     }
 });
+
 
 //Enrollement-Event
 Event.hasMany(Enrollement, {
@@ -79,6 +86,6 @@ Event.hasMany(Enrollement, {
 
 
 
-export default {Mentor, Mentee, Event, Task};
+export default {Mentor, Mentee, Event, Task, Enrollement};
 
 

@@ -5,55 +5,55 @@ import db from "../config/database.js";
 const Task = db.define(
     "task",
     {
-        task_id : {
+        taskId : {
             type : Sequelize.UUID,
             defaultValue : Sequelize.UUIDV4,
             allowNul : false,
             primaryKey : true
         },
         
-        task_name : {
+        taskName : {
             type : Sequelize.STRING,
             allowNul : false,
             
         },
 
-        task_summary: {
+        taskSummary: {
             type : Sequelize.STRING,
             allowNul : false
         },
 
-        task_dueHour : {
+        taskDueHour : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        task_dueDay : {
+        taskDueDay : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        task_dueMonth : {
+        taskDueMonth : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
 
-        task_dueYear : {
+        taskDueYear : {
             type : Sequelize.INTEGER,
             allowNul : false
         },
         
-        task_dueTimeZone : {
+        taskDueTimeZone : {
             type : Sequelize.STRING,
             allowNul : false
         },
 
-        task_Status : {
+        taskStatus : {
             type: Sequelize.SMALLINT,
             allowNul : false
         },
 
-        task_answerLink : {
+        taskAnswerLink : {
             type : Sequelize.STRING,
             allowNul : true
         },

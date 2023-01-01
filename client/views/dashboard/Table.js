@@ -10,80 +10,7 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
 
-const rows = [
-  {
-    age: 27,
-    status: 'review',
-    date: '09/27/2018',
-    name: 'Sally Quinn',
-    salary: 'Intro to DataScience',
-    email: 'eebsworth2m@sbwire.com',
-    designation: 'Human Resources Assistant'
-  },
-  {
-    age: 61,
-    date: '09/23/2016',
-    salary: 'Intro to DataScience',
-    status: 'review',
-    name: 'Margaret Bowers',
-    email: 'kocrevy0@thetimes.co.uk',
-    designation: 'Nuclear Power Engineer'
-  },
-  {
-    age: 59,
-    date: '10/15/2017',
-    name: 'Minnie Roy',
-    status: 'rejected',
-    salary: 'Intro to DataScience',
-    email: 'ediehn6@163.com',
-    designation: 'Environmental Specialist'
-  },
-  {
-    age: 30,
-    date: '06/12/2018',
-    status: 'review',
-    salary: 'Intro to DataScience',
-    name: 'Ralph Leonard',
-    email: 'dfalloona@ifeng.com',
-    designation: 'Sales Representative'
-  },
-  {
-    age: 66,
-    status: 'rejected',
-    date: '03/24/2018',
-    salary: 'Intro to DataScience',
-    name: 'Annie Martin',
-    designation: 'Operator',
-    email: 'sganderton2@tuttocitta.it'
-  },
-  {
-    age: 33,
-    date: '08/25/2017',
-    salary: 'Intro to DataScience',
-    name: 'Adeline Day',
-    status: 'success',
-    email: 'hnisius4@gnu.org',
-    designation: 'Senior Cost Accountant'
-  },
-  {
-    age: 61,
-    status: 'rejected',
-    date: '06/01/2017',
-    salary: 'Intro to DataScience',
-    name: 'Lora Jackson',
-    designation: 'Geologist',
-    email: 'ghoneywood5@narod.ru'
-  },
-  {
-    age: 22,
-    date: '12/03/2017',
-    salary: 'Intro to DataScience',
-    name: 'Rodney Sharp',
-    status: 'success',
-    designation: 'Cost Accountant',
-    email: 'dcrossman3@google.co.jp'
-  }
-]
+
 
 const statusObj = {
   applied: { color: 'info' },
@@ -93,7 +20,7 @@ const statusObj = {
   success: { color: 'success' }
 }
 
-const DashboardTable = () => {
+const DashboardTable = ({data}) => {
   return (
     <Card>
       <TableContainer>
@@ -102,37 +29,58 @@ const DashboardTable = () => {
             <TableRow>
               <TableCell>Mentor</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>TaskName</TableCell>
-              <TableCell>remaining time (days)</TableCell>
+              <TableCell>Due Date</TableCell>
+              <TableCell>Task Name</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
+            {data.map(row => (
+              <TableRow hover  sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
                 <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
+                    <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.mentor.mentor_name}</Typography>
                     <Typography variant='caption'>{row.designation}</Typography>
                   </Box>
                 </TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.salary}</TableCell>
-                <TableCell>{row.age}</TableCell>
+                <TableCell>{row.mentor.mentor_email}</TableCell>
+                <TableCell>{`${row.taskDueDay + "-" + row.taskDueMonth}` + "-" + row.taskDueYear}</TableCell>
+                <TableCell>{row.taskName}</TableCell>
+                
                 <TableCell>
-                  <Chip
-                    label={row.status}
-                    color={statusObj[row.status].color}
-                    sx={{
-                      height: 24,
-                      fontSize: '0.75rem',
-                      textTransform: 'capitalize',
-                      '& .MuiChip-label': { fontWeight: 500 }
-                    }}
-                  />
+                {
+                      row.taskStatus === 0 ?  <button className={`bg-slate-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full`}>
+                      Assigned
+                    </button> : ""
+
+                    
+                    }
+
+{
+                      row.taskStatus === 1 ?  <button className={`bg-yellow-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full`}>
+                      Review
+                    </button> : ""
+
+                    
+                    }
+
+{
+                      row.taskStatus === 2 ?  <button className={`bg-red-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full`}>
+                      Rejected
+                    </button> : ""
+
+                    
+                    }
+
+{
+                      row.taskStatus === 3 ?  <button className={`bg-green-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full`}>
+                      Success
+                    </button> : ""
+
+                    
+                    }
                 </TableCell>
+              
               </TableRow>
             ))}
           </TableBody>
