@@ -1,11 +1,11 @@
 import Mentee from "../models/mentee.model.js"
 import {hashPassword, compareHashedPassword} from '../utils/hashPassword.js'
 import { generateToken, verifyToken } from "../utils/sessions.js"
+import Models from "../models/index.js";
 
 export const loginMentee = (req, res) => {
 
     const user = {...req.body}
-
     Mentee
     .findOne({
         where : {
@@ -59,14 +59,14 @@ export const registerMentee = async (req, res) => {
 }
 
 
-export const verifyMentee = (req, res, next) => {
+export const verifyMentee = (req, res) => {
+    console.log(req.body);
     const token = req.body.jwt ? req.body.jwt : req.cookies.jwt;
-    console.log(token)
     
     if (token) {
         const auth = verifyToken(token)
-        if(auth) {
-            next()
+        if(auth.allowed) {
+            res.status(201).json(auth.user);
         }
 
         else {
@@ -83,7 +83,7 @@ export const verifyMentee = (req, res, next) => {
 }
 
 export const authMentee = (req, res) => {
-    res.status(201).json({message: "User successfully verified"})
+    
 }
 
 export const logoutMentee = (req, res) => {
@@ -91,5 +91,23 @@ export const logoutMentee = (req, res) => {
 
     res.status(201).json({message : "Logout successfuly"});
 }
+export const getMentors = async (req, res) => {
+    const mentee = {...req.body}
+    try {
+        const info = await Models.Mentee.findOne({
+            where : {
+                mentee_id : mentee.mentee_id
+            },
 
-export default {loginMentee, registerMentee, verifyMentee, authMentee, logoutMentee};
+            include : [Models.Mentor]
+        })
+
+        res.status(200).json(info);
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).json({message: "An error occured !", error : err});
+    }
+}
+
+export default {loginMentee, registerMentee, verifyMentee, authMentee, logoutMentee, getMentors};

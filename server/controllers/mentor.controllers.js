@@ -1,6 +1,7 @@
 import {hashPassword, compareHashedPassword} from '../utils/hashPassword.js'
 import { generateToken, verifyToken } from "../utils/sessions.js"
 import Mentor from "../models/mentor.model.js";
+import Models from "../models/index.js";
 
 
 export const loginMentor =  (req, res) => {
@@ -89,4 +90,25 @@ export const logoutMentor = (req, res) => {
     res.status(201).json({message : "Logout successfuly"});
 }
 
-export default {loginMentor, registerMentor, verifyMentor, authMentor, logoutMentor};
+
+export const setMentee = async (req, res) => {
+    const mentee  = {...req.body};
+    try {
+        const retval = await Models.Mentee.update({
+            MentorID : mentee.mentor_id,
+        }, {
+            where : {
+                mentee_id : mentee.mentee_id
+            }
+        })
+
+        res.status(200).json({message : "Mentor assigned !"})
+    }
+
+    catch(err) {
+        res.status(500).json({message: "An error occured !", error : err})
+    }
+    
+}
+
+export default {loginMentor, registerMentor, verifyMentor, authMentor, logoutMentor, setMentee};

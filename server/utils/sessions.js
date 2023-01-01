@@ -14,7 +14,10 @@ export const generateToken = (mentee_id) => {
 export const verifyToken = (token) => {
     return jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
         if(err){
-            return false
+            return {
+                user : null,
+                allowed : false
+            }
         }
 
         else {
@@ -25,7 +28,10 @@ export const verifyToken = (token) => {
             // else {
             //     return true
             // }
-            return true
+            return {
+                allowed : true,
+                user : decodedToken.id,
+            }
         }
     })
 } 

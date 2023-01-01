@@ -15,6 +15,12 @@ Mentor.hasOne(Mentee, {
     }
 });
 
+Mentee.belongsTo(Mentor, {
+    foreignKey : {
+        name : "MentorID"
+    }
+})
+
 
 //Mentor-Event
 
