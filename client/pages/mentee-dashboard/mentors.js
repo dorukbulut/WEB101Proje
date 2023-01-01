@@ -1,6 +1,9 @@
 import MenteeNavbar from "../../components/ui/MenteeNavbar";
+import { getCookies, setCookie, deleteCookie } from 'cookies-next';
+import axios from "axios";
 
-const MentorsPage = () => {
+const MentorsPage = ({data}) => {
+  console.log(data);
   return (
     <div className="grid grid-cols-5">
       <div className="col-span-1">
@@ -94,4 +97,32 @@ const MentorsPage = () => {
     </div>
   );
 };
+
+
+export async function getServerSideProps(context) {
+  const cookie = context.req.cookies
+
+  try{
+      const res = await axios.post("http://localhost:3001/mentee/verify",cookie,{withCredentials:true})
+      if (res.status === 201) {
+          
+          return {props : {
+              authToken : cookie,
+              data : res.data
+          }}
+      }
+  }
+  
+
+  catch(err) {
+       console.log(err);
+      return {
+          redirect : {
+              permanent : false,
+              destination :"/signin-mentee"
+          }
+      }
+  }
+
+}
 export default MentorsPage;

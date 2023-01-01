@@ -7,8 +7,8 @@ export default function SignInPage() {
   const handleSubmit = async(e, data, router) => {
     e.preventDefault();
     const res = await axios.post("http://localhost:3001/mentee/login",data, {withCredentials:true})
-    
-    if (res.status === 201) router.push("/mentee-dashboard")
+    console.log(res);
+    if (res.status === 201) router.push("/mentee-dashboard");
 
     else router.push("/signin-mentee")
   }

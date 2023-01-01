@@ -1,7 +1,8 @@
 import axios from "axios";
-import {useRouter} from "next/router";
+import {useRouter, withRouter} from "next/router";
 import Head from 'next/head'
 import { Router } from 'next/router'
+import { getCookies, setCookie, deleteCookie } from 'cookies-next';
 
 // ** Loader Import
 import NProgress from 'nprogress'
@@ -59,11 +60,9 @@ import StatisticsCard from '../../views/dashboard/StatisticsCard'
 import WeeklyOverview from '../../views/dashboard/WeeklyOverview'
 
 import MenteeNavbar from "../../components/ui/MenteeNavbar";
-const Dashboard = () => {
-    
 
-  // Variables
-  
+const Dashboard = ({data}) => {
+  console.log(data);
   return (
     <div className="grid grid-cols-5">
         <div className="col-span-1">
@@ -99,8 +98,10 @@ export async function getServerSideProps(context) {
     try{
         const res = await axios.post("http://localhost:3001/mentee/verify",cookie,{withCredentials:true})
         if (res.status === 201) {
+            
             return {props : {
-                authToken : cookie
+                authToken : cookie,
+                data : res.data
             }}
         }
     }
@@ -122,4 +123,4 @@ export async function getServerSideProps(context) {
 
 
 
-export default Dashboard;
+export default withRouter(Dashboard);
